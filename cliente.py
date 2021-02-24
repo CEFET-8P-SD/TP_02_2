@@ -22,6 +22,7 @@ class Cliente():
         pass
     
     def __enviar_mensagem(self, event=None):
+
         input_msg = my_msg.get()
         my_msg.set('')
         cliente.sendto(input_msg.encode(), destino)
@@ -34,7 +35,15 @@ class Cliente():
     #   Configurando métodos de envia e chegada
     # ---------------------------------------------------------
     def __receber_mensagem(self):
-        pass
+
+        while True:
+
+            try:
+                msg = cliente.recv(BUFSIZ).decode('utf8')
+                msg_list.insert(tkinter.END, msg)
+                
+            except OSError:
+                break
 
     #-----------------------------------------------------------------------------------------
     # Método de inicialização da interface
