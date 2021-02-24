@@ -11,11 +11,30 @@ Fontes:
 
 '''
 
+from socket import socket, AF_INET, SOCK_DGRAM
+from threading import Thread
+import tkinter
+import sys
+
 class Cliente():
     
     def __init__(self):
+        pass
     
+    def __enviar_mensagem(self, event=None):
+        input_msg = my_msg.get()
+        my_msg.set('')
+        cliente.sendto(input_msg.encode(), destino)
 
+        if input_msg == '{quit}':
+            cliente.close()
+            top.quit()
+    
+    # ---------------------------------------------------------
+    #   Configurando métodos de envia e chegada
+    # ---------------------------------------------------------
+    def __receber_mensagem(self):
+        pass
 
     #-----------------------------------------------------------------------------------------
     # Método de inicialização da interface
@@ -47,7 +66,7 @@ class Cliente():
 
         top.protocol('WM_DELETE_WINDOW', fechar_chat)
 
-        #receive_thread = Thread(target=receber_mensagem)
-        #receive_thread.start()
+        receive_thread = Thread(target=self.__receber_mensagem)
+        receive_thread.start()
         tkinter.mainloop()
     
