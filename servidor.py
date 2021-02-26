@@ -11,12 +11,13 @@ Fontes:
 
 '''
 
+from datetime import datetime
 import rpyc
 
-class Servidor(rpyc.Service):
+mensagens = []
 
-    def __init__(self):
-        self.__mensagens = []
+class Servidor(rpyc.Service):
+    global mensagens        
     
     def on_connect(self, conn):
         
@@ -29,20 +30,25 @@ class Servidor(rpyc.Service):
         return "Você quer sair? Então vai...!!!"
 
     def exposed_informe_nome(self, nome):
-        info = "Entrou no chat."
 
-        msm = {
+        hora = datetime.now().strftime('%H:%M:%S')
+        
+        msg = "{} {}: Entrou no chat.".format(hora,nome)
 
-            nome: info
-
-        }
-
-        self.__mensagens.append(msm)
+        mensagens.append(msg)
 
         return "Você ({}) está no chat.".format(nome)
 
-    def exposed_return_mensage(self, nome, last_mensage):
-        return self.__mensagens[last_mensage:]
+    def exposed_enviar_mensagem(self, nome, msg):
+
+        hora = datetime.now().strftime('%H:%M:%S')
+
+        mensagem = "{} {}: {}".format(hora, nome, msg)
+
+        mensagens.append(mensagem)
+
+    def exposed_return_mensage(self, last_mensage):
+        return mensagens[last_mensage:]
 
 
 if __name__ == "__main__":
