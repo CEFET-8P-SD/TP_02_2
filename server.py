@@ -21,14 +21,6 @@ mensagens = []
 class Servidor(rpyc.Service):
     global mensagens
 
-    def on_connect(self, conn):
-        # Ao conectar guarde uma mensagem de entrada
-        return "Você está conectado. Agora diga seu nome, bocó."
-
-    def on_disconnect(self, conn):
-        # Finalize guardando uma mensagem de saída
-        return "Você quer sair? Então vai...!!!"
-
     def exposed_informe_nome(self, nome):
         hora = datetime.now().strftime('%H:%M:%S')
 
