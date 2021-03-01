@@ -18,7 +18,8 @@ import tkinter
 import sys
 
 last_msg = 0
-nome = str(sys.argv[1])
+IP = str(sys.argv[1])
+nome = str(sys.argv[2])
 
 
 def receber_mensagem():
