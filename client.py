@@ -28,7 +28,7 @@ def receber_mensagem():
     msg = "Olá, seja bem vindo ao chat RPyC."
     msg_list.insert(tkinter.END, msg)
 
-    nome_resp = server.root.exposed_informe_nome(nome)
+    nome_resp = server.root.informe_nome(nome)
 
     msg_list.insert(tkinter.END, nome_resp)
 
@@ -38,7 +38,7 @@ def receber_mensagem():
             s_atual = datetime.now().second
             if abs(s_atual - ultimo) > 0.5:
 
-                msg = server.root.exposed_return_mensage(last_msg)
+                msg = server.root.return_mensage(last_msg)
                 ultimo = s_atual
 
                 last_msg += len(msg)
@@ -55,7 +55,7 @@ def enviar_mensagem(event=None):
     msg = my_msg.get()
     my_msg.set('')
     if msg != '{quit}' and msg != '':
-        server.root.exposed_enviar_mensagem(nome, msg)
+        server.root.enviar_mensagem(nome, msg)
         hora = datetime.now().strftime('%H:%M:%S')
         msg_list.insert(tkinter.END, "{} {}: {}".format(hora, nome, msg))
         last_msg += 1
