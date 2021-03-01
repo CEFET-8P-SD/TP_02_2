@@ -11,41 +11,44 @@ Fontes:
 
 """
 
+from datetime import datetime
 import rpyc
-import random
 from rpyc.utils.server import ThreadedServer
 
+mensagens = []
 
-class Server(rpyc.Service):
 
-    # code that runs when a connection is created
+class Servidor(rpyc.Service):
+    global mensagens
+
     def on_connect(self, conn):
-        print('Server RPC iniciado')
-        self.conexao_feita()
-        print(self.exposed_fibonnaci(random.randint(5, 15)))
+        # Ao conectar guarde uma mensagem de entrada
+        return "Você está conectado. Agora diga seu nome, bocó."
 
-    # code that runs after the connection has already closed
-    # (to finalize the service, if needed)
     def on_disconnect(self, conn):
-        print('on_disconnect')
+        # Finalize guardando uma mensagem de saída
+        return "Você quer sair? Então vai...!!!"
 
-    # este e um metodo não exposto
-    def conexao_feita(self):
-        print('conexao realizada com sucesso')
+    def exposed_informe_nome(self, nome):
+        hora = datetime.now().strftime('%H:%M:%S')
 
-    # este e um metodo exposto
-    def exposed_fibonnaci(self, n: int) -> []:
-        if n == 1:
-            return [1]
-        if n == 2:
-            return [1, 1]
+        msg = "{} {}: Entrou no chat.".format(hora, nome)
 
-        values = [1, 1]
-        for _ in range(2, n):
-            values.append(values[-1] + values[-2])
-        return values
+        mensagens.append(msg)
+
+        return "Você ({}) está no chat.".format(nome)
+
+    def exposed_enviar_mensagem(self, nome, msg):
+        hora = datetime.now().strftime('%H:%M:%S')
+
+        mensagem = "{} {}: {}".format(hora, nome, msg)
+
+        mensagens.append(mensagem)
+
+    def exposed_return_mensage(self, last_mensage):
+        return mensagens[last_mensage:]
 
 
-if __name__ == '__main__':
-    server = ThreadedServer(Server, port=12345)
-    server.start()
+if __name__ == "__main__":
+    t = ThreadedServer(Servidor, port=18861)
+    t.start()
