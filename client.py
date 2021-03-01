@@ -56,6 +56,8 @@ def enviar_mensagem(event=None):
     my_msg.set('')
     if msg != '{quit}' and msg != '':
         server.root.exposed_enviar_mensagem(nome, msg)
+        hora = datetime.now().strftime('%H:%M:%S')
+        msg_list.insert(tkinter.END, "{} {}: {}".format(hora, nome, msg))
         last_msg += 1
     else:
         server.close()
@@ -92,7 +94,7 @@ send_button.pack()
 
 top.protocol('WM_DELETE_WINDOW', fechar_chat)
 
-server = rpyc.connect("localhost", 18861)
+server = rpyc.connect(IP, 18861)
 
 receive_thread = Thread(target=receber_mensagem)
 receive_thread.start()
