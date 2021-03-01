@@ -60,6 +60,8 @@ def enviar_mensagem(event=None):
         msg_list.insert(tkinter.END, "{} {}: {}".format(hora, nome, msg))
         last_msg += 1
     else:
+        msg = "{} se desconectou do chat".format(nome)
+        server.root.enviar_mensagem(nome, msg)
         server.close()
         top.quit()
 
