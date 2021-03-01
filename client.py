@@ -3,9 +3,9 @@
 Desenvolvedores:
     @AdrlVMA & @MayconCarvalho
 
------------------------------------------------------------------------------------------
+-----------------------------------------
 Classe Cliente - Comunicação RCP
------------------------------------------------------------------------------------------
+-----------------------------------------
 
 Fontes:
 
@@ -25,7 +25,7 @@ nome = str(sys.argv[2])
 def receber_mensagem():
     global last_msg
     global nome
-    msg = "Olá, seja bem vindo ao chat Educado."
+    msg = "Olá, seja bem vindo ao chat RPyC."
     msg_list.insert(tkinter.END, msg)
 
     nome_resp = server.root.exposed_informe_nome(nome)
